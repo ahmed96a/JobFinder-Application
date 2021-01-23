@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d490361fe1e048899efe0ebf31995594" Name="Diagram1">
+        <EntityTypeShape EntityType="JobFinderModel.ApplyForJob" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobFinderModel.AspNetRole" Width="1.5" PointX="0.625" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobFinderModel.AspNetUser" Width="1.5" PointX="2.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobFinderModel.Category" Width="1.5" PointX="6" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobFinderModel.Job" Width="1.5" PointX="8.875" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobFinderModel.Notification" Width="1.5" PointX="3.25" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="JobFinderModel.FK_dbo_ApplyForJobs_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="JobFinderModel.FK_dbo_ApplyForJobs_dbo_Jobs_JobId" ManuallyRouted="false" />
+        <AssociationConnector Association="JobFinderModel.FK_dbo_Jobs_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="JobFinderModel.FK_dbo_Notifications_dbo_AspNetUsers_SenderId" ManuallyRouted="false" />
+        <AssociationConnector Association="JobFinderModel.FK_dbo_Jobs_dbo_Categories_CategoryId" ManuallyRouted="false" />
+        <AssociationConnector Association="JobFinderModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

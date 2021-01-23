@@ -1,0 +1,159 @@
+﻿body {
+    padding-top: 50px;
+    /*padding-bottom: 20px;*/
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/*******************************************************************************************/
+
+/* Our Style */
+
+body
+{
+    font-family: raleway
+}
+
+/* Start Customizing Navbar */
+
+.navbar-default {
+    background-color: #3377b3;
+    border-color: #e7e7e7;
+}
+
+.navbar-default .navbar-brand {
+    color: white;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: white;
+    font-size: 15px
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+    color: #c9c9dd
+}
+
+nav .navbar-brand
+{
+    padding: 0 15px
+}
+
+nav .mylogo
+{
+    width: 80px;
+    margin-top: 8px
+}
+
+nav #SearchJob
+{
+    width: 205px;
+    margin: 7px 22px;
+    font-size: 15px;
+    height: 35px;
+    border-radius: 8px;
+}
+
+nav #search-icon 
+{
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: #757070;
+    position: relative;
+    right: 55px;
+}
+
+nav #search-icon:hover
+{
+    color: cornflowerblue
+}
+
+nav #dropdown-trigger
+{
+    color: white;
+    background: transparent;
+    border: 0;
+    padding-top: 15px;
+}
+
+.nav .caret
+{
+    border-top-color: white;
+    border-bottom-color: white;
+}
+
+/* End Customizing Navbar */
+
+/* Start Customizing Footer */
+
+.myfooter
+{
+    text-align: justify;
+    background-color: #57b4ec;
+    margin-top: 30px
+}
+
+.myfooter h4
+{
+    margin-top: 20px
+}
+
+.myfooter .myfooter-aboutme p
+{
+    color: white;
+    font-size: 15px;
+}
+
+.myfooter .myfooter-categories ul li a
+{
+    color: white;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.myfooter .myfooter-categories ul li a:hover
+{
+    color: black
+}
+
+.myfooter .myfooter-links ul
+{
+    list-style-type: none;
+    padding: 0
+}
+
+.myfooter .myfooter-links ul li a
+{
+    font-size: 17px;
+    color: white;
+    opacity: 0.8;
+    transition: 0.2s;
+}
+
+.myfooter .myfooter-links ul li a:hover
+{
+    text-decoration: none;
+    color: black;
+    opacity: 1
+}
+
+/* End Customizing Footer */

@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <ul class="nav navbar-nav navbar-right">
+
+            @* Notifications dropdown menu *@
+
+            @if (User.IsInRole("Publisher") || User.IsInRole("Applicant"))
+            {
+                @Html.Action("NotificationData", "Home");
+            }
+
+            <li>
+
+                @* Part 36, 37 *@
+                @*/////////////////////////////////////*@
+
+                @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+
+                <div class="dropdown">
+
+                    <button id="dropdown-trigger" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        Hello @User.Identity.GetUserName() !
+                        <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu">
+
+                        @* "MM" Admin LTE*@
+                        @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+                        {
+                            <li><a href="~/Admins/Index">Go To DashBoard</a></li>
+                        }
+
+                        <li><a href="~/Account/EditProfile">Edit Account</a></li>
+
+                        @if (User.IsInRole("Applicant"))
+                        {
+                            <li><a href="~/Applicants/JobsThatAppliedTo">Jobs That You Applied For</a></li>
+                        }
+                        @if (User.IsInRole("Publisher"))
+                        {
+                            <li><a href="~/Publishers/GetJobsByPublisher">Jobs That You Published</a></li>
+                            <li><a href="~/Jobs/Create">Publish New Job</a></li>
+                        }
+
+                        <li role="separator" class="divider"></li>
+
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    </ul>
+                </div>
+
+                @*/////////////////////////////////////*@
+
+            </li>
+            @*<li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>*@
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

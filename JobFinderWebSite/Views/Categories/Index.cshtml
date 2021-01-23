@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DataAccessLayer.Category>
+
+@{
+    ViewBag.Title = "Job Categories";
+}
+
+<h2>Job Categories</h2>
+
+@if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+@*To print the modelstate errors if the request to the webapi failed.*@
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryDescription)
+        </th>
+
+        @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+        {
+            <th>Actions</th>
+        }
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.CategoryName, "Index", "Jobs", new { CategoryId = item.Id }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryDescription)
+            </td>
+            @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-success" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                </td>
+            }
+        </tr>
+    }
+
+</table>

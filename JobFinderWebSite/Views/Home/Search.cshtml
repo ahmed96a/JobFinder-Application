@@ -1,0 +1,60 @@
+﻿@* Part 35 *@
+@model IEnumerable<DataAccessLayer.Job>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+@section styles{
+
+    <style>
+        .job-content p {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
+
+}
+
+<h2>Search For @ViewBag.Search</h2>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+@if (Model.Count() == 0)
+{
+    <h4>There is no results for your Search.</h4>
+}
+
+else
+{
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+            <div class="row" style="margin-bottom: 30px">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3">
+                        <div class="thumbnail" style="min-height: 315px">
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Publisher") && ViewBag.CurrentUserPostedJobsId.Contains(item.Id))
+                            {
+                                <i class="fas fa-thumbtack" title="Your Posted Job"></i>
+                            }
+
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Applicant") && ViewBag.CurrentUserAppliedJobsId.Contains(item.Id))
+                            {
+                                <i class="fas fa-hands-helping" title="Applied To That Job"></i>
+                            }
+
+                            <img src="~/Uploads/JobImages/@item.JobImage" alt="@item.JobTitle" style="height: 200px; width: 200px" />
+                            <h4 style="text-align: center">"@Html.DisplayFor(model => item.JobTitle)"</h4>
+                            <div class="job-content">@Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => item.JobContent).ToString()))</div>
+                            <a href="~/Jobs/Details/@item.Id" class="btn btn-success">Details</a>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

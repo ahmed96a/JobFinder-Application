@@ -1,0 +1,150 @@
+﻿@model IEnumerable<DataAccessLayer.ApplyForJob>
+
+@{
+    ViewBag.Title = "GetApplies";
+}
+
+
+@section styles{
+
+    <style>
+        #job-content p {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
+
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+
+        @if (ViewBag.Search != null)
+        {
+            <h2>"@ViewBag.Search" Results</h2>
+        }
+
+        <h2 style="margin-bottom: 10px; color: #4063a2">@ViewBag.Applicant</h2>
+
+        <h2 style="margin-bottom: 10px; color: #4063a2">@ViewBag.JobIdTitle</h2>
+
+        <h2 style="margin-bottom: 10px">@ViewBag.ApplyTitle</h2>
+
+
+        <div style="margin-bottom: 20px; margin-top: 5px">
+            @using (Html.BeginForm())
+            {
+                <label style="font-weight: 600 !important">Filter : </label>
+                @Html.DropDownList("CategoryId", null, "All Categories", new { @class = "form-control", style = "display: inline-block; width: 280px" })
+                @Html.DropDownList("JobStatus", null, "All Jobs", new { @class = "form-control", style = "display: inline-block; width: 280px" })
+                @Html.DropDownList("ApplyStatus", null, "All Applies", new { @class = "form-control", style = "display: inline-block; width: 280px" })
+                <input type="submit" value="Apply" class="btn btn-success" style="margin-left: 25px; margin-bottom: 5px" />
+            }
+        </div>
+
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <table class="table table-bordered table-hover table-striped">
+            <tr>
+                <th style="color: grey">
+                    @Html.DisplayNameFor(model => model.Job.Category.CategoryName)
+                </th>
+                <th style="color: grey">
+                    @Html.DisplayNameFor(model => model.Job.JobTitle)
+                </th>
+                <th style="color: grey">
+                    Job Publisher
+                </th>
+                <th style="color: grey">
+                    Job Status
+                </th>
+                <th style="color: #4c7dd5">
+                    Applicant
+                </th>
+                <th style="color: #4c7dd5">
+                    @Html.DisplayNameFor(model => model.Message)
+                </th>
+                <th style="color: #4c7dd5">
+                    @Html.DisplayNameFor(model => model.CV)
+                </th>
+                <th style="color: #4c7dd5">
+                    @Html.DisplayNameFor(model => model.ApplyDate)
+                </th>
+                <th style="color: #4c7dd5">
+                    Apply Status
+                </th>
+                <th style="color: #4c7dd5">
+                    Actions
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Job.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Job.JobTitle)
+                    </td>
+                    <td>
+                        <a target="_blank" href="~/Admins/GetJobsByPublisher?Publisher=@item.Job.Publisher.UserName">@Html.DisplayFor(modelItem => item.Job.Publisher.UserName)</a>
+                    </td>
+                    <td>
+                        @if (item.Job.IsSuspended)
+                        {
+                            <text>Suspened</text>
+                        }
+                        else
+                        {
+                            <text>Active</text>
+                        }
+                    </td>
+                    <td>
+                        <a target="_blank" href="~/Admins/GetApplies?Applicant=@Html.DisplayFor(modelItem => item.Applicant.UserName)">@Html.DisplayFor(modelItem => item.Applicant.UserName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("DownloadCV", new { CVName = item.CV, ApplicantName = item.Applicant.UserName, JobName = item.Job.JobTitle })" target="_blank"><i class='fas fa-download'></i></a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApplyDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "DeleteApply", new { id = item.Id }, new { @class = "btn btn-danger", style = "margin-bottom: 2px" }) |
+                        @Html.ActionLink("Details", "ApplyDetails", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</section>
+
+@section scripts{
+
+    <script>
+        $(function () {
+
+            $("aside.main-sidebar .sidebar nav li.nav-item a[href*='/Admins/GetApplies']").addClass("active")
+
+            // Search Form
+
+            $("nav.main-header form#search-form input#search-input").prop("placeholder", "Search Applicants");
+
+            // we can neglect setting the action property, and the form will be submitted to the same action method.
+            //$("nav.main-header form#search-form").prop("action", "/Admins/GetApplies");
+
+        });
+    </script>
+
+}

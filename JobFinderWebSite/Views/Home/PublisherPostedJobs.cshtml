@@ -1,0 +1,96 @@
+﻿@model IEnumerable<DataAccessLayer.Job>
+
+@{
+    ViewBag.Title = "PublisherPostedJobs";
+}
+
+@section styles{
+
+    <style>
+        #job-details p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+}
+
+<h2 class="text-center">@ViewBag.Publisher Posted Jobs</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsSuspended)
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobTitle)
+            </td>
+            <td id="job-details" style="max-width: 220.65px;">
+                @Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => item.JobContent).ToString()))
+            </td>
+            <td>
+                <img src="@Url.Content("~/Uploads/JobImages/" + item.JobImage)" alt="@item.JobTitle" style="width: 100px; height: 100px" class="thumbnail" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @if (item.IsSuspended)
+                {
+                    <text>Suspened</text>
+                }
+                else
+                {
+                    <text>Active</text>
+                }
+            </td>
+            <td>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Applicant"))
+                {
+                    if (!ViewBag.CurrentUserAppliedJobsId.Contains(item.Id))
+                    {
+                        @Html.ActionLink("Apply", "Apply", "Applicants", new { id = item.Id }, new { @class = "btn btn-success" }) <text>|</text>
+                    }
+                    else
+                    {
+                        <a href="#" class="btn btn-primary disabled">Already Applied</a> <text> | </text>
+                    }
+                }
+
+                @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("SuperAdmin")))
+                {
+                    @Html.ActionLink("Delete", "DeleteJobByAdmin", "Admins", new { id = item.Id }, new { @class = "btn btn-danger" }) <text>|</text>
+                }
+
+                @Html.ActionLink("Details", "Details", "Jobs", new { id = item.Id }, new { @class = "btn btn-default" })
+            </td>
+        </tr>
+    }
+
+</table>

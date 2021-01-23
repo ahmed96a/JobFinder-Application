@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Logout";
+}
+
+<h2>Logout</h2>
+
+<script>
+    if (localStorage.getItem("accessToken") == null)
+    {
+        window.location.href = "/WebAPI";
+    }
+
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userName");
+    window.location.href = "/WebAPI";
+</script>

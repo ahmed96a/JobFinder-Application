@@ -1,0 +1,123 @@
+﻿@model DataAccessLayer.ApplyForJob
+
+@{
+    ViewBag.Title = "ApplyDetails";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <h2>Apply Details</h2>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div>
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Job.Category.CategoryName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Job.Category.CategoryName)
+                </dd>
+
+                <dt>
+                    Job Publisher
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Job.Publisher.UserName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Job.JobTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Job.JobTitle)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Job.JobContent)
+                </dt>
+
+                <dd>
+                    @Html.DisplayNameFor(model => model.Job.JobContent)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Job.JobImage)
+                </dt>
+
+                <dd>
+                    <img src="@Url.Content("~/Uploads/JobImages/" + Model.Job.JobImage)" alt="@Model.Job.JobTitle" style="width: 100px; height: 100px" class="thumbnail" />
+                </dd>
+
+                <dt>
+                    Job Status
+                </dt>
+
+                <dd>
+                    @if (Model.Job.IsSuspended)
+                    {
+                        <text>Suspened</text>
+                    }
+                    else
+                    {
+                        <text>Active</text>
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Message)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Message)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CV)
+                </dt>
+
+                <dd>
+                    <a href="@Url.Action("DownloadCV", new { CVName = Model.CV, ApplicantName = Model.Applicant.UserName, JobName = Model.Job.JobTitle })" target="_blank"><i class='fas fa-download'></i></a>
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ApplyDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ApplyDate)
+                </dd>
+
+                <dt>
+                    Apply Status
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Status)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Back to List", "GetApplies", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
+</section>
+
+@section scripts{
+
+    <script>
+        $(function () {
+
+            $("aside.main-sidebar .sidebar nav li.nav-item a[href*='/Admins/GetApplies']").addClass("active")
+
+        });
+    </script>
+
+}

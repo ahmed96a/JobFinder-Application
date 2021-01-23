@@ -1,0 +1,73 @@
+﻿@model DataAccessLayer.Models.ContactViewModel
+@* Part 42 *@
+@{
+    ViewBag.Title = "Contact";
+}
+
+<h2>Contact</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @if (ViewBag.status != null)
+        {
+            <div class="alert alert-success" id="sucess-status">
+                @ViewBag.status
+            </div>
+        }
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Message, new { htmlAttributes = new { @class = "form-control" } })<br />
+                @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Send" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<address>
+    One Microsoft Way<br />
+    Redmond, WA 98052-6399<br />
+    <abbr title="Phone">P:</abbr>
+    425.555.0100
+</address>
+
+<address>
+    <strong>Support:</strong>   <a href="mailto:JobFinder@gmail.com">JobFinder@gmail.com</a><br />
+</address>
+
+@section scripts{
+
+    <script>
+    // Redirect to Home page After 5 Seconds, if User Successfully Applied To The job.
+    if($("#sucess-status").length > 0)
+    {
+        setTimeout(function () {
+
+            window.location.href = "@Url.Action("Index", "Home")";
+
+        }, 5000);
+    }
+    </script>
+}

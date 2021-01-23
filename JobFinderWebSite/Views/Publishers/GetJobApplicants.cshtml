@@ -1,0 +1,133 @@
+﻿@model IEnumerable<DataAccessLayer.ApplyForJob>
+
+@{
+    ViewBag.Title = "GetJobApplicants";
+}
+
+<h2 style="margin-bottom: 20px; text-align: center">Applicants To "@ViewBag.JobTitle" Job</h2>
+
+<div style="margin-bottom: 20px; margin-top: 5px">
+    <label>Filter : </label>
+    <a id="pending" class="btn btn-default" href="~/Publishers/GetJobApplicants/@ViewBag.JobId?Status=Pending">Pending <span style="border: 1px solid wheat; border-radius: 50%; padding: 1px 5px">@ViewBag.PendingAppliesCount</span></a>
+    <a id="approved" class="btn btn-default" href="~/Publishers/GetJobApplicants/@ViewBag.JobId?Status=Approved">Approved <span style="border: 1px solid wheat; border-radius: 50%; padding: 1px 5px">@ViewBag.ApprovedAppliesCount</span></a>
+    <a id="denied" class="btn btn-default" href="~/Publishers/GetJobApplicants/@ViewBag.JobId?Status=Denied">Denied <span style="border: 1px solid wheat; border-radius: 50%; padding: 1px 5px">@ViewBag.DeniedAppliesCount</span></a>
+    <a id="all" class="btn btn-default" href="~/Publishers/GetJobApplicants/@ViewBag.JobId?Status=All">All <span style="border: 1px solid wheat; border-radius: 50%; padding: 1px 5px">@ViewBag.AllAppliesCount</span></a>
+
+    <h3 id="status"></h3>
+</div>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Applicant.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Applicant.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Message)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CV)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplyDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Applicant.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Applicant.Email)
+            </td>
+            <td style="max-width: 227.65px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                <a href="@Url.Action("DownloadCV", new { CVName=item.CV, ApplicantName=item.Applicant.UserName, JobName=item.Job.JobTitle })" target="_blank"><i class='fas fa-download'></i></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplyDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "JobApplicantDetails", new { id = item.Id }, new { @class = "btn btn-primary" }) |
+
+                @if (item.Status == "Approved")
+                {
+                    @Html.ActionLink("Deny", "DenyApply", new { id = item.Id }, new { @class = "btn btn-danger" })
+                }
+
+                else if (item.Status == "Denied")
+                {
+                    @Html.ActionLink("Approve", "ApproveApply", new { id = item.Id }, new { @class = "btn btn-success" })
+                }
+
+                else
+                {
+                    @Html.ActionLink("Approve", "ApproveApply", new { id = item.Id }, new { @class = "btn btn-success" }) <text>|</text>
+                    @Html.ActionLink("Deny", "DenyApply", new { id = item.Id }, new { @class = "btn btn-danger" })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+<p>
+    @Html.ActionLink("Back To Your Jobs List", "GetJobsByPublisher")
+</p>
+
+@section scripts{
+
+    <script>
+
+        $(function () {
+
+            var url = window.location.href;
+            if (url.indexOf("?Status") == -1 || url.substr(url.indexOf("?Status=") + 8) == "Pending")
+            {
+                $("#pending").removeClass("btn-default");
+                $("#pending").addClass("btn-warning");
+                $("#status").text("Pending Applicants");
+            }
+            else if (url.substr(url.indexOf("?Status=") + 8) == "Approved")
+            {
+                $("#approved").removeClass("btn-default");
+                $("#approved").addClass("btn-success");
+                $("#status").text("Approved Applicants");
+            }
+            else if (url.substr(url.indexOf("?Status=") + 8) == "Denied") {
+                $("#denied").removeClass("btn-default");
+                $("#denied").addClass("btn-danger");
+                $("#status").text("Denied Applicants");
+            }
+            else if (url.substr(url.indexOf("?Status=") + 8) == "All") {
+                $("#all").removeClass("btn-default");
+                $("#all").addClass("btn-primary");
+                $("#status").text("All Applicants");
+            }
+            else {
+                $("#all").removeClass("btn-default");
+                $("#all").addClass("btn-primary");
+                $("#status").text("All Applicants");
+            }
+
+        });
+
+
+    </script>
+
+}

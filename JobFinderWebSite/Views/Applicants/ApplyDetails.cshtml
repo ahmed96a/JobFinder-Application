@@ -1,0 +1,117 @@
+﻿@model DataAccessLayer.ApplyForJob
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@section styles{
+
+    <style>
+        dt {
+            margin-bottom: 20px;
+        }
+    </style>
+}
+
+<h2>Details</h2>
+
+<div>
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Job.Category.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayNameFor(model => model.Job.Category.CategoryName)
+        </dd>
+
+        <dt>
+            Job Publisher
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Job.Publisher.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Job.JobTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Job.JobTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Job.JobContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayNameFor(model => model.Job.JobContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Job.JobImage)
+        </dt>
+
+        <dd>
+            <img src="@Url.Content("~/Uploads/JobImages/" + Model.Job.JobImage)" alt="@Model.Job.JobTitle" style="width: 100px; height: 100px" class="thumbnail" />
+        </dd>
+
+        <dt>
+            Job Status
+        </dt>
+
+        <dd>
+            @if (Model.Job.IsSuspended)
+            {
+                <text>Suspened</text>
+            }
+            else
+            {
+                <text>Active</text>
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Message)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CV)
+        </dt>
+
+        <dd>
+            <a href="@Url.Action("DownloadCV", new { CVName = Model.CV, ApplicantName = Model.Applicant.UserName, JobName = Model.Job.JobTitle })" target="_blank"><i class='fas fa-download'></i></a>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplyDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplyDate)
+        </dd>
+
+        <dt>
+            Apply Status
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (!Model.Job.IsSuspended)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-success" }) <text>|</text>
+    }
+    @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" }) |
+    @Html.ActionLink("Back to Your Applies List", "JobsThatAppliedTo", null, new { @class = "btn btn-default" })
+</p>

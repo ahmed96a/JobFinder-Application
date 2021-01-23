@@ -1,0 +1,123 @@
+﻿@* Part 3, 4 *@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>@ViewBag.Title</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet"> <!-- Importing Raleway font from google -->
+
+    @Styles.Render("~/Content/css") <!-- Contains the bootstrap.css file and Site.css file the has some default styles and our style -->
+    @Scripts.Render("~/bundles/modernizr")
+
+    @RenderSection("styles", required: false)
+
+</head>
+<body>
+
+    <!-- Navbar -->
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="~/Home">
+                    <img src="~/Images/logo.png" alt="Brand" class="mylogo" />
+                </a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="~/Home"><i class="glyphicon glyphicon-home"></i> &nbsp; Home</a>
+                    </li>
+                    <li>
+                        <a href="~/Categories"><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Categories</a>
+                    </li>
+                    <li>
+                        <a href="~/Jobs"><i class="glyphicon glyphicon-briefcase"></i> &nbsp; Jobs</a>
+                    </li>
+                    <li>
+                        <a href="~/Home/Contact"><i class="glyphicon glyphicon-info-sign"></i> &nbsp; Contact</a>
+                    </li>
+
+                    @*Part 34 35*@
+                    @*/////////////////////////////*@
+
+                    <li>
+                        @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+                        {
+                            <input type="text" id="SearchJob" name="SearchJob" placeholder="Search Job" class="input-sm" />
+                            <button type="submit" id="search-icon">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        }
+                    </li>
+
+                    @*/////////////////////////////*@
+                </ul>
+
+                @{Html.RenderPartial("_LoginPartial");}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Body -->
+
+    <div class="container body-content" style="min-height: 500px">
+        @RenderBody()
+    </div>
+
+    <footer class="myfooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 myfooter-aboutme">
+                    <h4><i class="glyphicon glyphicon-info-sign"></i> About Us</h4>
+                    <p>JobFinder .net is created and managed by AsdSoft, we successfully served 10,000+ top companies and employers in Egypt, 1.5 MILLION CVs were viewed on our platform and 100,000+ job seekers directly hired through us. In total, 250,000+ open job vacancies were advertised and now, 500,000+ users visit our website each month looking for jobs at top Employers.</p>
+                </div>
+
+                <div class="col-md-4 myfooter-categories">
+                    <h4 style="padding-left: 25px"><i class="glyphicon glyphicon-folder-open"></i> &nbsp; Categories</h4>
+                    <ul>
+                        <li><a href="#">Public sector jobs</a></li>
+                        <li><a href="#">Private sector jobs</a></li>
+                        <li><a href="#">Jobs outside the country</a></li>
+                        <li><a href="#">Various Jobs</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 myfooter-links">
+                    <h4><i class="glyphicon glyphicon-envelope"></i> Contact Us</h4>
+                    <ul style="list-style-type: none">
+                        <li><a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook" style="color: #4267B2"></i> JobFinderOfficial</a></li>
+                        <li><a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube" style="color: #F00"></i> JobFinder</a></li>
+                        <li><a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter" style="color: #1DA1F2"></i> @@JobFinder</a></li>
+                        <li><a href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJfpsCrGFCjhrZSLXRJhRsqVxGlhBmChtHQfpnRDtcKdXKTCTcNqVzZrMJKSmnxlrgmJmPL" target="_blank"><i class="fas fa-at" style="color: #D44638"></i> JobFinder@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p style="text-align:center">&copy; @DateTime.Now.Year - JobFinder Application</p>
+        </div>
+    </footer>
+
+
+    <div class="sub-footer">
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

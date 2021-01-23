@@ -1,0 +1,133 @@
+﻿@*"MM"*@
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Dashboard</h1>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>@ViewBag.JobsCount</h3>
+
+                        <p>Posted Jobs</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <a href="~/Admins/GetJobs" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@ViewBag.PublishersCount</h3>
+
+                        <p>Publishers</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <a href="~/Admins/GetPublishers" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner" style="color: white">
+                        <h3>@ViewBag.ApplicantsCount</h3>
+
+                        <p>Applicants</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="~/Admins/GetApplicants" class="small-box-footer" style="color: white !important">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-secondary">
+                    <div class="inner">
+                        <h3>@ViewBag.AdminsCount</h3>
+
+                        <p>Admins</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-user-tie"></i>
+                    </div>
+                    <a href="~/Admins/GetAdmins" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <!-- ./col -->
+            <div class="col-lg-3 col-6" style="margin:auto">
+                <!-- small box -->
+                <div class="small-box bg-dark">
+                    <div class="inner">
+                        <h3>@ViewBag.ApplyForJobsCount</h3>
+
+                        <p>Apply For Jobs</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-handshake"></i>
+                    </div>
+                    <a href="~/Admins/GetApplies" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+
+            <!-- ./col -->
+            <div class="col-lg-3 col-6" style="margin:auto">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>@ViewBag.CategoriesCount</h3>
+
+                        <p>Categories</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-handshake"></i>
+                    </div>
+                    <a href="~/Admins/GetCategories" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+    </div>
+</section>
+
+@section scripts{
+
+    <script>
+        $(function () {
+
+            $("aside.main-sidebar .sidebar nav li.nav-item a[href*='/Admins/Index']").addClass("active")
+
+            // remove the form of the search input in the dashboard page.
+            $("nav.main-header form#search-form").remove();
+
+        });
+    </script>
+
+}

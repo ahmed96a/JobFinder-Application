@@ -1,0 +1,122 @@
+﻿@model IEnumerable<DataAccessLayer.Job>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@ViewBag.CategoryTitle Jobs</h2>
+
+
+@if (User.IsInRole("Publisher"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+<div style="margin-bottom: 20px; margin-top: 5px">
+    @using (Html.BeginForm())
+    {
+        if (ViewBag.CategoryId != null)
+        {
+            <label>Filter : </label>
+            @Html.DropDownList("CategoryId", null, "All Categories", new { @class = "form-control", style = "display: inline-block" })
+            <input type="submit" value="Apply" class="btn btn-primary" />
+        }
+    }
+</div>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        <th>
+            Job Publisher
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="~/Home/PublisherPostedJobs?PublisherName=@item.Publisher.UserName">@Html.DisplayFor(model => item.Publisher.UserName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobTitle)
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Publisher") && ViewBag.CurrentUserPostedJobsId.Contains(item.Id))
+                {
+                    <br />
+                    <p style="color: #3980cc">"Your Posted Job"</p>
+                }
+            </td>
+            <td>
+                @Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => item.JobContent).ToString()))
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Category.CategoryName)
+            </td>
+            <td>
+                <img src="@Url.Content("~/Uploads/JobImages/" + item.JobImage)" alt="@item.JobTitle" style="width: 100px; height: 100px" class="thumbnail" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+
+                @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("SuperAdmin")))
+                {
+                    @Html.ActionLink("Delete", "DeleteJobByAdmin", "Admins", new { id = item.Id }, new { @class = "btn btn-danger" }) <text>|</text>
+                }
+
+                else if (User.Identity.IsAuthenticated && User.IsInRole("Publisher") && ViewBag.CurrentUserPostedJobsId.Contains(item.Id))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-success", style = "margin-bottom: 3px" }) <text>|</text>
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" }) <text>|</text>
+
+                    if (!item.IsSuspended)
+                    {
+                        @Html.ActionLink("Suspend", "SuspendJob", "Publishers", new { id = item.Id }, new { @class = "btn btn-warning" }) <text> | </text>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Activate", "ActivateJob", "Publishers", new { id = item.Id }, new { @class = "btn btn-success" }) <text> | </text>
+                    }
+                }
+
+                else if (User.Identity.IsAuthenticated && User.IsInRole("Applicant"))
+                {
+                    if (!ViewBag.CurrentUserAppliedJobsId.Contains(item.Id))
+                    {
+                        @Html.ActionLink("Apply", "Apply", "Applicants", new { id = item.Id }, new { @class = "btn btn-success" }) <text>|</text>
+                    }
+                    else
+                    {
+                        <a href="#" class="btn btn-primary disabled">Already Applied</a> <text> | </text>
+                    }
+                }
+
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+    }
+
+</table>

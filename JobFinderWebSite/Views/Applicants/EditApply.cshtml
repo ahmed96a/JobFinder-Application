@@ -1,0 +1,127 @@
+﻿@model DataAccessLayer.ApplyForJob
+
+@{
+    ViewBag.Title = "Edit Apply";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("EditApply", "Applicants", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Job.Category.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="padding-top: 7px">
+                @Html.DisplayFor(model => model.Job.Category.CategoryName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Job.JobTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="padding-top: 7px">
+                @Html.DisplayFor(model => model.Job.JobTitle)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Job.Publisher.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="padding-top: 7px">
+                @Html.DisplayFor(model => model.Job.Publisher.UserName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Message, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CV, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CV, new { htmlAttributes = new { @class = "form-control", type = "file", data_val = "false" } })
+                <span>(pdf, doc or docx)</span>
+                @Html.ValidationMessageFor(model => model.CV, "", new { @class = "text-danger" })                
+
+                <span id="error-status" class="text-danger" style="display: block"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ApplyDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="padding-top: 7px">
+                @Html.DisplayFor(model => model.ApplyDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default", id="submit" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to Your Applies List", "JobsThatAppliedTo", null, new { @class = "btn btn-default" })
+</div>
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>        
+
+        $(function () {
+
+            // Validate the CV.
+
+            $("#submit").click(function () {
+
+                if($("#CV").val() != "")
+                {
+                    var fileName = $("#CV").val();
+                    var fileExtension = fileName.substr(fileName.lastIndexOf(".") + 1);
+                    var validExtensions = ["pdf", "doc", "docx"];
+
+                    // Check extension if valid or not.
+                    if($.inArray(fileExtension, validExtensions) == -1)
+                    {
+                        $("#error-status").fadeIn().text("The Uploaded CV must be one of that format (pdf, doc, docx).");
+                        return false;
+                    }
+
+                    // Check if the file size is valid (2MB)
+                    var fileSize = document.getElementById("CV").files[0].size / 1024 / 1024;
+
+                    if (fileSize > 2) {
+                        $("#error-status").fadeIn().text("The filesize must be less than or equal 3MB");
+                        return false;
+                    }
+                }
+
+            });
+
+            // Redirect to Home page After 5 Seconds, if User Successfully Applied To The job.
+            if($("#sucess-status").length > 0)
+            {
+                setTimeout(function () {
+
+                    window.location.href = "@Url.Action("Index", "Home")";
+
+                }, 5000);
+            }
+
+        });
+    </script>
+}

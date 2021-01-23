@@ -1,0 +1,61 @@
+﻿@model IEnumerable<DataAccessLayer.Notification>
+
+@{
+    ViewBag.Title = "GetNotifications";
+}
+
+
+@if (ViewBag.NewNot == true)
+{
+    <h2>New Notifications</h2>
+}
+else
+{
+    <h2>All Notifications</h2>
+}
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Message)
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="~/Home/OpenNotification/@item.Id">@Html.DisplayFor(modelItem => item.Subject)</a>
+                @if (item.IsRead == false)
+                {
+                    <span style="background-color: #e84848;color: white; font-size: 9px; display: inherit; padding: 3px; border-radius: 5px;">New</span>
+                }
+            </td>
+            <td style="max-width: 230px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.ActionLink("Open in New Tab", "OpenNotification", new { id = item.Id }, new { @class = "btn btn-success", target = "_blank" })
+                @if (!item.IsRead)
+                {
+                    <text>|</text> @Html.ActionLink("Mark as Read", "MarkNotAsRead", new { id = item.Id }, new { @class = "btn btn-primary" })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,84 @@
+﻿@model DataAccessLayer.Job
+
+@{
+    ViewBag.Title = "DeleteJobByAdmin";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <h2>Delete</h2>
+
+        <h3>Are you sure you want to delete this?</h3>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div>
+            <h4>Job</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Category.CategoryName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Category.CategoryName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.JobTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.JobTitle)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.JobContent)
+                </dt>
+
+                <dd>
+                    @Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => model.JobContent).ToString()))
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.JobImage)
+                </dt>
+
+                <dd>
+                    <img src="@Url.Content("~/Uploads/JobImages/" + Model.JobImage)" alt="@Model.JobTitle" style="width: 100px; height: 100px" class="thumbnail" /> @* Part 14 *@
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-danger" /> |
+                    @Html.ActionLink("Back to Jobs List", "GetJobs", "Admins", null, new { @class = "btn btn-default" })
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+
+@section scripts{
+
+    <script>
+        $(function () {
+
+            $("aside.main-sidebar .sidebar nav li.nav-item a[href*='/Admins/GetJobs']").addClass("active")
+
+            // Search Form
+
+            $("nav.main-header form#search-form input#search-input").prop("placeholder", "Search Job");
+            $("nav.main-header form#search-form").prop("action", "GetJobs");
+
+        });
+    </script>
+
+}

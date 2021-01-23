@@ -1,0 +1,151 @@
+﻿@model IEnumerable<DataAccessLayer.Job>
+
+@{
+    ViewBag.Title = "Jobs";
+}
+
+@section styles{
+
+    <style>
+        #job-content p {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
+
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+
+        @if (!string.IsNullOrEmpty(ViewBag.Publisher))
+        {
+            <h2 style="margin-bottom: 10px; color: #4063a2">@ViewBag.Publisher Jobs</h2>
+        }
+
+        @if (!string.IsNullOrEmpty(ViewBag.Search))
+        {
+            <h2 style="margin-bottom: 10px; color: #4063a2">"@ViewBag.Search" Results</h2>
+        }
+
+        <h2 style="margin-bottom: 10px;">@ViewBag.JobTitle</h2>
+
+        @*<p>
+                @Html.ActionLink("Create New Job", "Create")
+            </p>*@
+
+
+        <div style="margin-bottom: 20px; margin-top: 5px">
+            @using (Html.BeginForm())
+            {
+                <label style="font-weight: 600 !important">Filter : </label>
+                @Html.DropDownList("CategoryId", null, "All Categories", new { @class = "form-control", style = "display: inline-block; width: 280px" })
+                @Html.DropDownList("JobStatus", null, "All", new { @class = "form-control", style = "display: inline-block; width: 280px" })
+                <input type="submit" value="Apply" class="btn btn-success" style="margin-left: 25px; margin-bottom: 5px" />
+            }
+        </div>
+
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <table class="table table-bordered table-hover table-striped">
+            <tr>
+                <th>
+                    Job Publisher
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category.CategoryName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.JobTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.JobContent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.JobImage)
+                </th>
+                <th>
+                    Job Applies
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsSuspended)
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a target="_blank" href="~/Admins/GetJobs?Publisher=@Html.DisplayFor(modelItem => item.Publisher.UserName)">@Html.DisplayFor(modelItem => item.Publisher.UserName)</a>
+                    </td>
+                    <td>
+                        <a href="~/admins/GetJobs?CategoryId=@item.CategoryId">@Html.DisplayFor(modelItem => item.Category.CategoryName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobTitle)
+                    </td>
+                    <td id="job-content" style="max-width: 200px">
+                        @Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => item.JobContent).ToString())) @* Part 40 *@
+                    </td>
+                    <td>
+                        <img src="@Url.Content("~/Uploads/JobImages/" + item.JobImage)" alt="@item.JobTitle" style="width: 100px; height: 100px" class="thumbnail" /> @* Part 14 *@
+                    </td>
+                    <td>
+                        <a target="_blank" href="~/Admins/GetApplies?JobId=@item.Id">@Html.DisplayFor(modelItem => item.Applies.Count)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @if (item.IsSuspended)
+                        {
+                            <text>Suspened</text>
+                        }
+                        else
+                        {
+                            <text>Active</text>
+                        }
+                    </td>
+                    <td>
+
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-default" }) <text>|</text>*@
+
+                        @Html.ActionLink("Delete", "DeleteJobByAdmin", new { id = item.Id }, new { @class = "btn btn-danger", style = "margin-bottom: 2px" }) <text>|</text>
+
+                        @Html.ActionLink("Details", "DetailsJobByAdmin", new { id = item.Id }, new { @class = "btn btn-primary" })
+
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
+</section>
+
+@section scripts{
+
+    <script>
+        $(function () {
+
+            $("aside.main-sidebar .sidebar nav li.nav-item a[href*='/Admins/GetJobs']").addClass("active")
+
+            // Search Form
+
+            $("nav.main-header form#search-form input#search-input").prop("placeholder", "Search Job");
+            $("nav.main-header form#search-form").prop("action", "GetJobs");
+
+        });
+    </script>
+
+}

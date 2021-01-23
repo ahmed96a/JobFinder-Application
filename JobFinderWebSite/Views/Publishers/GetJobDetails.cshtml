@@ -1,0 +1,68 @@
+﻿@model DataAccessLayer.Job
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Job</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JobTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JobTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JobContent)
+        </dt>
+
+        <dd>
+            @Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => model.JobContent).ToString())) @* Part 40 *@
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JobImage)
+        </dt>
+
+        <dd>
+            <img src="@Url.Content("~/Uploads/JobImages/" + Model.JobImage)" alt="@Model.JobTitle" style="width: 100px; height: 100px" class="thumbnail" /> @* Part 14 *@
+        </dd>
+
+    </dl>
+</div>
+
+@*Part 24*@
+@*////////////////////////////////////*@
+<p>
+
+    @Html.ActionLink("Edit", "Edit", "Jobs", new { id = Model.Id }, new { @class = "btn btn-success" }) <text>|</text>
+
+    @Html.ActionLink("Delete", "Delete", "Jobs", new { id = Model.Id }, new { @class = "btn btn-danger" }) <text>|</text>
+
+    @if (!Model.IsSuspended)
+    {
+        @Html.ActionLink("Suspend", "SuspendJob", "Publishers", new { id = Model.Id }, new { @class = "btn btn-warning" })
+    }
+    else
+    {
+        @Html.ActionLink("Activate", "ActivateJob", "Publishers", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    }
+
+    <text>|</text> @Html.ActionLink("Back to Your Jobs List", "GetJobsByPublisher", "Publishers", null, new { @class = "btn btn-default" })
+
+</p>
+@*////////////////////////////////////*@

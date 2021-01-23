@@ -1,0 +1,87 @@
+﻿@model IEnumerable<DataAccessLayer.ApplyForJob>
+
+@{
+    ViewBag.Title = "JobsThatAppliedTo";
+}
+
+<h2 class="text-center">Jobs That You Applied To</h2>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger"})
+
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        <th style="color: grey">
+            @Html.DisplayNameFor(model => model.Job.Category.CategoryName)
+        </th>
+        <th style="color: grey">
+            @Html.DisplayNameFor(model => model.Job.JobTitle)
+        </th>
+        <th style="color: grey">
+            Job Publisher
+        </th>
+        <th style="color: grey">
+            Job Status
+        </th>
+        <th style="color: #4c7dd5">
+            @Html.DisplayNameFor(model => model.Message)
+        </th>
+        <th style="color: #4c7dd5">
+            @Html.DisplayNameFor(model => model.CV)
+        </th>
+        <th style="color: #4c7dd5">
+            @Html.DisplayNameFor(model => model.ApplyDate)
+        </th>
+        <th style="color: #4c7dd5">
+            Apply Status
+        </th>
+        <th style="color: #4c7dd5">
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Job.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Job.JobTitle)
+            </td>
+            <td>
+                <a href="~/Home/PublisherPostedJobs?PublisherName=@item.Job.Publisher.UserName">@Html.DisplayFor(modelItem => item.Job.Publisher.UserName)</a>
+            </td>
+            <td>
+                @if (item.Job.IsSuspended)
+                {
+                    <text>Suspened</text>
+                }
+                else
+                {
+                    <text>Active</text>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                <a href="@Url.Action("DownloadCV", new { CVName = item.CV, ApplicantName = item.Applicant.UserName, JobName = item.Job.JobTitle })" target="_blank"><i class='fas fa-download'></i></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplyDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @if (!item.Job.IsSuspended)
+                {
+                    @Html.ActionLink("Edit", "EditApply", new { id = item.Id }, new { @class = "btn btn-success", style = "margin-bottom: 3px" }) <text>|</text>
+                }
+                @Html.ActionLink("Delete", "DeleteApply", new { id = item.Id }, new { @class = "btn btn-danger" }) |
+                @Html.ActionLink("Details", "ApplyDetails", new { id = item.Id }, new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+    }
+
+</table>

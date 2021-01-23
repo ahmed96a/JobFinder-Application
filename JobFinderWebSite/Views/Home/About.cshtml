@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "About Us";
+}
+
+<div class="row" style="margin-top: 20px;background: #f4f4f4;border: 1px solid wheat;">
+    <div class="col-md-offset-1 col-md-5">
+        <h2>@ViewBag.Title</h2>
+        <p>@ViewBag.Message</p>
+
+        <h2>Looking for a job?</h2>
+
+        <p>
+            If you are searching for a new career opportunity, you can <a href="~/Jobs/Index">search open vacancies and jobs</a>.You can also <a href="~/Account/Register">signup</a> here to be alerted of new jobs by email.
+        </p>
+
+        <h2>Are you a recruiter or employer?</h2>
+        <p>If you are currently hiring, and would like to advertise your jobs on JobFinder.net, please <a href="~/Account/Register">signup for an employer account</a> and post your jobs right away.</p>
+
+        <h2>Other inquiries?</h2>
+
+        <p>If you have any other inquiries, please contact us <a href="~/Home/Contact">here</a>.</p>
+    </div>
+    <div class="col-md-4">
+        <img src="~/Images/about-us-map.jpg" alt="Location" style="margin-top: 60px; width: 550px" />
+    </div>
+</div>

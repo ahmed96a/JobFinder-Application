@@ -1,0 +1,66 @@
+﻿@model IEnumerable<DataAccessLayer.Category>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@section styles{
+
+    <style>
+        .job-content p {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
+
+}
+
+<div class="jumbotron alert alert-info">
+    <h3 style="color: black">Welcome at JobFinder !</h3>
+    <p class="lead" style="color: black">You can serach for a job, or post an job.</p>
+    <p><a href="~/Home/About" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger"})
+
+@foreach (var item in Model)
+{
+    if (item.Jobs.Where(x => x.IsSuspended == false).Count() != 0)
+    {
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <h2>@Html.DisplayFor(model => item.CategoryName)</h2>
+                <h5>@Html.DisplayFor(model => item.CategoryDescription)</h5>
+            </div>
+
+            <div class="panel-body">
+                <div class="row" style="margin-bottom: 30px">
+                    @foreach (var job in item.Jobs.Where(x => x.IsSuspended == false))
+                    {
+                        <div class="col-md-3">
+                            <div class="thumbnail" style="min-height: 315px">
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Publisher") && ViewBag.CurrentUserPostedJobsId.Contains(job.Id))
+                                {
+                                    <i class="fas fa-thumbtack" title="Your Posted Job" style="color: #3377b3"></i>
+                                }
+
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Applicant") && ViewBag.CurrentUserAppliedJobsId.Contains(job.Id))
+                                {
+                                    <i class="fas fa-hands-helping" title="Applied To That Job" style="color: #3377b3"></i>
+                                }
+
+                                <img src="~/Uploads/JobImages/@job.JobImage" alt="@job.JobTitle" style="height: 200px; width: 200px" />
+                                <h4 style="text-align: center">"@Html.DisplayFor(model => job.JobTitle)"</h4>
+                                <div class="job-content">@Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => job.JobContent).ToString()))</div>
+                                <a href="~/Jobs/Details/@job.Id" class="btn btn-success">Details</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    }
+}

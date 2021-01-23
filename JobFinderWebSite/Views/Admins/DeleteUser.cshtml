@@ -1,0 +1,80 @@
+﻿@model DataAccessLayer.AspNetUser
+
+@{
+    ViewBag.Title = "DeleteUser";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <h4>Delete</h4>
+
+        <p>Are you sure you want to delete this?</p>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UserName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+        </dl>
+        <input type="hidden" value="@ViewBag.User" id="UserType" />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+
+                @if (ViewBag.User == "Publisher")
+                {
+                    @Html.ActionLink("Back to Publishers List", "GetPublishers", null, new { @class = "btn btn-default" })
+                }
+
+                @if (ViewBag.User == "Applicant")
+                {
+                    @Html.ActionLink("Back to Applicants List", "GetApplicants", null, new { @class = "btn btn-default" })
+                }
+
+            </div>
+        }
+    </div>
+</section>
+
+
+@section scripts{
+    <script>
+
+        $(function () {
+
+            if ($("#UserType").val() == "Publisher")
+            {
+                $("aside.main-sidebar .sidebar nav #li-Publishers-Applicants").addClass("menu-open");
+                $("aside.main-sidebar .sidebar nav #li-Publishers-Applicants #a-Publishers-Applicants").addClass("active");
+                $("aside.main-sidebar .sidebar nav li.nav-item a[href*='/Admins/GetPublishers']").addClass("active");
+            }
+            else
+            {
+                $("aside.main-sidebar .sidebar nav #li-Publishers-Applicants").addClass("menu-open");
+                $("aside.main-sidebar .sidebar nav #li-Publishers-Applicants #a-Publishers-Applicants").addClass("active");
+                $("aside.main-sidebar .sidebar nav li.nav-item a[href*='/Admins/GetApplicants']").addClass("active");
+            }
+        });
+
+    </script>
+}

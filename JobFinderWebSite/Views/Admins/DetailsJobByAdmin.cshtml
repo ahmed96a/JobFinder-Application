@@ -1,0 +1,89 @@
+﻿@model DataAccessLayer.Job
+
+@{
+    ViewBag.Title = "DetailsJobByAdmin";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <h2>Details</h2>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div>
+
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Category.CategoryName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Category.CategoryName)
+                </dd>
+
+                <dt>
+                    Job Publisher
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Publisher.UserName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.JobTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.JobTitle)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.JobContent)
+                </dt>
+
+                <dd>
+                    @Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => model.JobContent).ToString())) @* Part 40 *@
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.JobImage)
+                </dt>
+
+                <dd>
+                    <img src="@Url.Content("~/Uploads/JobImages/" + Model.JobImage)" alt="@Model.JobTitle" style="width: 100px; height: 100px" class="thumbnail" /> @* Part 14 *@
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedDate)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Back to Jobs List", "GetJobs", "Admins", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
+</section>
+
+@section scripts{
+
+    <script>
+        $(function () {
+
+            $("aside.main-sidebar .sidebar nav li.nav-item a[href*='/Admins/GetJobs']").addClass("active")
+
+            // Search Form
+
+            $("nav.main-header form#search-form input#search-input").prop("placeholder", "Search Job");
+            $("nav.main-header form#search-form").prop("action", "GetJobs");
+
+        });
+    </script>
+
+}

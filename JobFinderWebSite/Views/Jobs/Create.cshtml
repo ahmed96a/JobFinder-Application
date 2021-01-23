@@ -1,0 +1,123 @@
+﻿@model DataAccessLayer.Job
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm("Create", "Jobs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Job</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.JobTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.JobTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobContent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.JobContent, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.JobContent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobImageFile, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.JobImageFile, new { @class = "form-control", type = "file" })
+                @Html.ValidationMessageFor(model => model.JobImageFile, "", new { @class = "text-danger" })
+                <span id="JobImageFile-validate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CategoryId, null, "Select Category", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    <div>
+        @Html.ActionLink("Back to Jobs List", "Index", null, new { @class = "btn btn-default" }) |
+        @Html.ActionLink("Back to Home Page", "Index", "Home", null, new { @class = "btn btn-default" })
+    </div>
+</div>
+
+@section Scripts {
+
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+        
+    <script>
+
+        $(function () {
+            
+            CKEDITOR.replace("JobContent"); // That line will replace the textarea with the CKEDITOR.
+
+            // Validate JobImageFile
+            //---------------------------------
+            var AllowSubmit = true;
+            $("input[name='JobImageFile']").change(function () {
+
+                var validExtensions = [".jpg", ".jpeg", ".png"];
+                var JobImageFile = document.querySelector("input[name='JobImageFile']");
+                var file = JobImageFile.files[0];
+                var fileName = file.name.substring(file.name.lastIndexOf(".")).toLowerCase();
+                var fileSize = file.size /1024 /1024;
+
+                if($.inArray(fileName, validExtensions) == -1)
+                {
+                    $("#JobImageFile-validate").text("The uploaded file must be one of these extensions " + validExtensions.toString());
+                    AllowSubmit = false;
+                }
+                else
+                {
+                    if(fileSize > 2)
+                    {
+                        $("#JobImageFile-validate").text("The uploaded file size must be equal or less than 2" );
+                        AllowSubmit = false;
+                    }
+                    else
+                    {
+                        $("#JobImageFile-validate").text("");
+                        AllowSubmit = true;
+                    }                    
+                }
+            });
+
+            $("input[type='submit']").click(function () {
+
+                if(AllowSubmit == false)
+                {
+                    return false;
+                }
+
+            });
+            //---------------------------------
+
+        });
+
+    </script>
+}

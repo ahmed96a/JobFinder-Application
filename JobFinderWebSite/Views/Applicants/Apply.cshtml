@@ -1,0 +1,116 @@
+﻿@model DataAccessLayer.ApplyForJob
+
+@{
+    ViewBag.Title = "Apply";
+}
+
+<h2>Apply</h2>
+
+@using (Html.BeginForm("Apply", "Applicants", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.Hidden("JobId")
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Message, new { htmlAttributes = new { @class = "form-control" } })
+                <span>(Optional)</span>
+                @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CV, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CV, new { htmlAttributes = new { @class = "form-control", type = "file", style = "display: inline-block" } })
+                <span>(pdf, doc or docx)</span>
+                @Html.ValidationMessageFor(model => model.CV, "", new { @class = "text-danger" })
+
+                @* Part 27 *@
+                <span id="error-status" class="text-danger" style="display: block"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Apply" class="btn btn-success" id="submit" />
+            </div>
+        </div>
+    </div>
+}
+
+@* Part 27 *@
+@*///////////////////////////////////////////*@
+
+@if (ViewBag.Result != null)
+{
+    <div class="alert alert-success" id="sucess-status">
+        @ViewBag.Result
+    </div>
+}
+
+@*///////////////////////////////////////////*@
+
+<div>
+    @Html.ActionLink("Back to Home Page", "Index", "Home", null, new { @class = "btn btn-default" }) |
+    @Html.ActionLink("Back to Jobs Page", "Index", "Jobs", null, new { @class = "btn btn-default" })
+</div>
+
+@* Part 27 *@
+@*///////////////////////////////////////////*@
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+    $(function () {
+
+        // Validate the CV.
+
+        $("#submit").click(function () {
+
+            if($("#CV").val() != "")
+            {
+                var fileName = $("#CV").val();
+                var fileExtension = fileName.substr(fileName.lastIndexOf(".") + 1).toLowerCase();
+                var validExtensions = ["pdf", "doc", "docx"];
+
+                // Check extension if valid or not.
+                if($.inArray(fileExtension, validExtensions) == -1)
+                {
+                    $("#error-status").fadeIn().text("The Uploaded CV must be one of that format (pdf, doc, docx).");
+                    return false;
+                }
+
+                // Check if the file size is valid (2MB)
+                var fileSize = document.getElementById("CV").files[0].size / 1024 / 1024;
+                if (fileSize > 3) {
+                    $("#error-status").fadeIn().text("The filesize must be less than or equal 3MB");
+                    return false;
+                }
+            }
+        });
+
+        // Redirect to Home page After 5 Seconds, if User Successfully Applied To The job.
+        if($("#sucess-status").length > 0)
+        {
+            setTimeout(function () {
+
+                window.location.href = "@Url.Action("Index", "Home")";
+
+            }, 5000);
+        }
+
+    });
+    </script>
+
+}
+@*///////////////////////////////////////////*@

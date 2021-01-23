@@ -1,0 +1,23 @@
+﻿<li class="nav-item dropdown">
+
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="far fa-bell"></i>
+        <span class="badge">@ViewBag.NewNots</span>
+    </a>
+
+    <ul class="dropdown-menu">
+        <li><span class="dropdown-header text-center">@ViewBag.TotalNots Notifications</span></li>
+        <li role="separator" class="divider"></li>
+
+        <li>
+            <a href="~/Home/GetNotifications?status=New">
+                <i class="fas fa-envelope"></i> <span style="margin-right: 4px">@ViewBag.NewNots</span> new messages
+                <span class="float-right text-muted" style="font-size: 11px">(@ViewBag.LastNewNotTime)</span>
+            </a>
+        </li>
+
+        <li role="separator" class="divider"></li>
+        <li><a href="~/Home/GetNotifications" class="text-center">See All Notifications</a></li>
+    </ul>
+
+</li>

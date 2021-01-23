@@ -1,0 +1,132 @@
+﻿@model WebAPI.Models.RegisterBindingModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+<hr />
+
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div id="div-error" class="text-danger">
+        <ul>
+
+        </ul>
+    </div>
+
+    <div id="div-success" class="text-success">
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.UserType, null, "Select Type", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.UserType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" id="submit-register" />
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        $(function () {
+            
+            if (localStorage.getItem("accessToken") != null) {
+                window.location.href = "/WebAPI";
+            }
+
+            $("#submit-register").click(function () {
+
+                $.ajax({
+
+                    url: "/WebAPI/api/Account/Register",
+                    method: "Post",
+                    data: {
+                        username: $("input[name='UserName']").val(),
+                        usertype: $("select[name='UserType']").val(),
+                        email: $("input[name='Email']").val(),
+                        password: $("input[name='Password']").val(),
+                        confirmpassword: $("input[name='ConfirmPassword']").val()
+                    },
+                    success: function () {
+
+                        $("#div-error ul").text("");
+                        $("#div-success").text("You Registered Successfully. You will be redirected to the Home page in 3 seconds.");
+
+                        setTimeout(function () {
+
+                            window.location.href = "http://localhost:53784/";
+
+                        }, 3000);
+
+                    },
+                    error: function (jqXHR) {
+                        if (jqXHR.status == "404") {
+                            $("#div-error").text("Not Found");
+                        }
+                        else if (jqXHR.status == "400") {
+
+                            $("#div-error ul").text("");
+                            var validationErrors = $.parseJSON(jqXHR.responseText);
+                            $.each(validationErrors.ModelState, function (index, val) {
+
+                                $("#div-error ul").append("<li>" + val + "</li>");
+
+                            });
+                        }                            
+                        else {
+                            $("#div-error").text(jqXHR.responseText);
+                        }
+
+                    }
+
+                });
+
+            });
+
+        });
+    </script>
+
+}

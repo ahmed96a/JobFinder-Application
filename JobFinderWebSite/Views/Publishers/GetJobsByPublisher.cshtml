@@ -1,0 +1,98 @@
+﻿@model IEnumerable<DataAccessLayer.Job>
+
+@{
+    ViewBag.Title = "GetJobsByPublisher";
+}
+
+@section styles{
+
+    <style>
+        #job-details p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+}
+
+<h2 class="text-center">@ViewBag.JobTitle</h2>
+
+<div style="margin-bottom: 20px; margin-top: 5px">
+    @using (Html.BeginForm())
+    {
+        <label>Filter : </label>
+        @Html.DropDownList("JobStatus", null, "All Jobs", new { @class = "form-control", style = "display: inline-block" })
+        <input type="submit" value="Apply" class="btn btn-primary" />
+    }
+</div>
+
+<p>
+    @Html.ActionLink("Post New Job", "Create", "Jobs")
+</p>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.JobTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            ApplicantsNumber
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobImage)
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobTitle)
+            </td>
+            <td style="max-width: 220.65px;" id="job-details">
+                @Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => item.JobContent).ToString()))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td style="width: 100px;">
+                @Html.ActionLink(item.Applies.Count.ToString(), "GetJobApplicants", new { Id = item.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                <img src="@Url.Content("~/Uploads/JobImages/" + item.JobImage)" alt="@item.JobTitle" style="width: 50px; height: 50px" class="thumbnail" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Jobs", new { id = item.Id }, new { @class = "btn btn-primary" }) <text>|</text>
+
+                @Html.ActionLink("Delete", "Delete", "Jobs", new { id = item.Id }, new { @class = "btn btn-danger" }) <text>|</text>
+
+                @if (!item.IsSuspended)
+                {
+                    @Html.ActionLink("Suspend", "SuspendJob", "Publishers", new { id = item.Id }, new { @class = "btn btn-warning" })
+                }
+                else
+                {
+                    @Html.ActionLink("Activate", "ActivateJob", "Publishers", new { id = item.Id }, new { @class = "btn btn-success" })
+                }
+
+                | @Html.ActionLink("Details", "GetJobDetails", "Publishers", new { id = item.Id }, new { @class = "btn btn-default", style = "margin-top: 5px" })
+            </td>
+        </tr>
+    }
+
+</table>
