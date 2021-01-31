@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -264,6 +265,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -275,6 +277,24 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Uploads\JobImages\Ahmed Ibrahim-6894fc18-e627-452c-a1ff-71d39a22af86-.NetDeveloper.jpg" />
+    <Content Include="Uploads\JobImages\Ahmed Ibrahim-7e3eb2fb-45f8-4a51-a646-1a993a8eca70-Quality Engineer.jpg" />
+    <Content Include="Uploads\JobImages\Ahmed Ibrahim-9699ba08-5713-48af-b54a-32a4b6de472e-Vue.png" />
+    <Content Include="Uploads\JobImages\Ahmed Ibrahim-c1f0d48a-545b-45bf-954a-09ceb77ac7c4-ai.jpg" />
+    <Content Include="Uploads\JobImages\Ali Nour-207ca5d5-cb1b-4649-8973-b4b6c106c3b4-tester.png" />
+    <Content Include="Uploads\JobImages\Ali Nour-55f8c704-0e78-443c-83b4-cd6d1da6ae89-node.jpg" />
+    <Content Include="Uploads\JobImages\Ali Nour-58b51f9a-0de5-465f-aeb0-a4746728a256-Angular Developer.png" />
+    <Content Include="Uploads\JobImages\Ali Nour-5f907a45-2363-4ae0-b146-2969423c1783-big data.jpeg" />
+    <Content Include="Uploads\JobImages\Ali Nour-9327acd5-ce58-4b93-838a-acc572b12e40-ui.jpg" />
+    <Content Include="Uploads\JobImages\Ali Nour-bf09c952-f5e2-4821-b1d2-d201dcef4f76-php.jpg" />
+    <Content Include="Uploads\JobImages\Assad Nasser-51a637dd-2dfa-4224-a266-e0ded3cede87-embedded.jpg" />
+    <Content Include="Uploads\JobImages\Assad Nasser-82cf6f49-27ea-4318-97e4-5cd9e3caabf8-iot.jpeg" />
+    <Content Include="Uploads\JobImages\Assad Nasser-8a089682-2c19-43f6-a47b-427bf96f2ffb-hadoop.png" />
+    <Content Include="Uploads\JobImages\Assad Nasser-8b619e3d-6318-4c6d-96a7-fef434715ffd-Computer_Scientist.jpg" />
+    <Content Include="Uploads\JobImages\Assad Nasser-b635966b-56d7-4f64-8557-4cc217eefa37-react.png" />
+    <Content Include="Uploads\JobImages\Assad Nasser-c3119245-501e-4f5e-bb98-9798aac21689-Ruby on Rails.png" />
+    <Content Include="Uploads\JobImages\Assad Nasser-e49271dd-0176-4b55-b19c-8d0e0fcde556-ai.png" />
+    <Content Include="Uploads\JobImages\Assad Nasser-f8f3dc97-4540-40aa-853c-a523bc555df9-iot.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -295,6 +315,25 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Logout.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Uploads\CV\1a0db7f9-56b0-484e-9175-535307e285d9-Aya Fathi-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\1ce7ec05-442a-4cff-a3b2-450e4c89ff98-Sara Saad-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\20cd275d-2aed-4e00-8036-c4e1c85e3868-Aya Fathi-Monday, 01 June 2020-CV.pdf" />
+    <Content Include="Uploads\CV\24bd7395-f7e9-4b3c-9a9f-3c66a2178f38-Moh Salah-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\2cabd21a-4fc5-4333-a562-3c499bc3cf8c-Sara Saad-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\32ed94e0-1e9f-4e78-ad2f-cb8e3071ea90-Moh Salah-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\39adcba9-6dd7-4305-bfd6-638ae8be3f91-Moh Salah-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\44705250-97d0-46c3-a10d-7e0e51e01fa4-Moh Salah-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\4ea43b5a-51fb-4767-9a1a-b279e9d2c2fa-Aya Fathi-Monday, 01 June 2020-CV.pdf" />
+    <Content Include="Uploads\CV\6df53889-bb67-42ea-af36-4bc4b0acef9d-Sara Saad-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\71259907-2759-481b-a476-24179078874c-Sara Saad-Monday, 01 June 2020-CV.pdf" />
+    <Content Include="Uploads\CV\a27d39c5-4bfb-4456-831f-2c2a0b935588-Sara Saad-Monday, 01 June 2020-CV.pdf" />
+    <Content Include="Uploads\CV\b12a7f6e-1293-4100-ae6e-2c77414327db-Sara Saad-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\bc6b0cc7-694f-4a49-ab04-c948d6782b4d-Aya Fathi-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\c7a97a90-3ae5-4c78-bcfe-db2147e2fbef-Sara Saad-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\c9039cfe-78d3-424f-bf4a-b1fe9fc0caf7-Sara Saad-Monday, 01 June 2020-CV.pdf" />
+    <Content Include="Uploads\CV\d47b308f-8d86-4ada-918c-8c3601402abc-Moh Salah-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\e96a6efa-4f86-4319-9b45-9975f1906a06-Sara Saad-Monday, 01 June 2020-CV.docx" />
+    <Content Include="Uploads\CV\fdfb71db-ab66-476d-a9ba-1e8c75692dbc-Aya Fathi-Monday, 01 June 2020-CV.docx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

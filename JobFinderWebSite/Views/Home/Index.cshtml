@@ -51,7 +51,7 @@
                                     <i class="fas fa-hands-helping" title="Applied To That Job" style="color: #3377b3"></i>
                                 }
 
-                                <img src="~/Uploads/JobImages/@job.JobImage" alt="@job.JobTitle" style="height: 200px; width: 200px" />
+                                <img src="http://ahmed3196-001-site1.ctempurl.com/Uploads/JobImages/@job.JobImage" alt="@job.JobTitle" style="height: 200px; width: 200px" />
                                 <h4 style="text-align: center">"@Html.DisplayFor(model => job.JobTitle)"</h4>
                                 <div class="job-content">@Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => job.JobContent).ToString()))</div>
                                 <a href="~/Jobs/Details/@job.Id" class="btn btn-success">Details</a>

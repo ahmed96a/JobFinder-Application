@@ -62,8 +62,9 @@
                 if ($("input[name='Email']").val() != "" && $("input[name='Password']").val() != "")
                 {
                     $.ajax({
-
-                        url: "http://localhost:53784/token",
+                        
+                        //url: "http://localhost:53784/token",
+                        url: "http://ahmed3196-001-site1.ctempurl.com/token",
                         method: "Post",
                         contentType: "application/json",
                         data:
@@ -76,8 +77,8 @@
 
                             localStorage.setItem("accessToken", data.access_token);
                             localStorage.setItem("userName", data.userName);
-                            window.location.href = "http://localhost:53784/";
-
+                            //window.location.href = "http://localhost:53784/";
+                            window.location.href = "http://ahmed3196-001-site1.ctempurl.com/";
                         },
                         error: function (jqXHR) {
 

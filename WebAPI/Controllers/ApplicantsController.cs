@@ -20,11 +20,19 @@ namespace WebAPI.Controllers
 
         public ApplicantsController()
         {
-            var WebAPIPath = HttpContext.Current.Server.MapPath("~");
-            var SolutionPathIndex = WebAPIPath.LastIndexOf("WebAPI");
-            var SolutionPath = WebAPIPath.Substring(0, SolutionPathIndex);
+            #region For Localhost
+            // we can replace these lines by providing directly the url path of the JobImages folder, like "http://localhost:51732/Uploads/JobImages/"
+            // also we used to save the images in the front project and we do that from the api project, and that is wrong because the uploads and the resuorces should be in the api server, so if we use different clients rather than the web, like mobile for example, these resources should be available to the client mobile.
+            // also from technically point, we can save resource in the front project from the api server project if they have the same root (share the same server) that is achieved in localhost, but that not achieved when we published the two projects, because we published them on different servers, so when we try to save file from api project in the front project, we get exception (The SaveAs method is configured to require a rooted path, and the path 'fp' is not rooted).
 
-            CVPath = Path.Combine(SolutionPath, @"JobFinderWebSite\Uploads\CV\");
+            //var WebAPIPath = HttpContext.Current.Server.MapPath("~");
+            //var SolutionPathIndex = WebAPIPath.LastIndexOf("WebAPI");
+            //var SolutionPath = WebAPIPath.Substring(0, SolutionPathIndex);
+
+            //CVPath = Path.Combine(SolutionPath, @"JobFinderWebSite\Uploads\CV\");
+            #endregion
+            var HttpRequest = HttpContext.Current.Request;
+            CVPath = HttpRequest.MapPath("~/Uploads/CV/");
         }
 
         [HttpGet]

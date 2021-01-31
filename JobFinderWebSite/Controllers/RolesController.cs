@@ -13,7 +13,8 @@ namespace JobFinderWebSite.Controllers
     public class RolesController : Controller
     {
         HttpClient httpClient = new HttpClient();
-        Uri baseAddress = new Uri("http://localhost:53784/api/");
+        //Uri baseAddress = new Uri("http://localhost:53784/api/");
+        Uri baseAddress = new Uri("http://ahmed3196-001-site1.ctempurl.com/api/");
 
         public RolesController()
         {

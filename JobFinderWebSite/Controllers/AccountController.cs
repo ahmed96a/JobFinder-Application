@@ -66,7 +66,8 @@ namespace JobFinderWebSite.Controllers
         {
             using (System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient())
             {
-                httpClient.BaseAddress = new Uri("http://localhost:53784/api/");
+                //httpClient.BaseAddress = new Uri("http://localhost:53784/api/");
+                httpClient.BaseAddress = new Uri("http://ahmed3196-001-site1.ctempurl.com/api/");
                 if (Request.Cookies["BearerToken"] != null)
                 {
                     var token = Request.Cookies["BearerToken"].Value;
@@ -109,7 +110,8 @@ namespace JobFinderWebSite.Controllers
                     return View(edit);
                 }
 
-                httpClient.BaseAddress = new Uri("http://localhost:53784/api/");
+                //httpClient.BaseAddress = new Uri("http://localhost:53784/api/");
+                httpClient.BaseAddress = new Uri("http://ahmed3196-001-site1.ctempurl.com/api/");
                 if (Request.Cookies["BearerToken"] != null)
                 {
                     var token = Request.Cookies["BearerToken"].Value;

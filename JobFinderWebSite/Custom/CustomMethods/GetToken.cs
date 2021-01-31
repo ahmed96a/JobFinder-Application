@@ -15,7 +15,8 @@ namespace JobFinderWebSite.Custom
         {
             using (HttpClient _httpClient = new HttpClient())
             {
-                _httpClient.BaseAddress = new Uri("http://localhost:53784/");
+                //_httpClient.BaseAddress = new Uri("http://localhost:53784/");
+                _httpClient.BaseAddress = new Uri("http://ahmed3196-001-site1.ctempurl.com/");
 
                 var content = new StringContent(string.Format("grant_type=password&username={0}&password={1}", model.Email, model.Password), System.Text.Encoding.UTF8);
 

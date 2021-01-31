@@ -58,7 +58,7 @@
         </dt>
 
         <dd>
-            <img src="@Url.Content("~/Uploads/JobImages/" + Model.JobImage)" alt="@Model.JobTitle" style="width: 100px; height: 100px" class="thumbnail" /> @* Part 14 *@
+            <img src="@Url.Content("http://ahmed3196-001-site1.ctempurl.com/Uploads/JobImages/" + Model.JobImage)" alt="@Model.JobTitle" style="width: 100px; height: 100px" class="thumbnail" /> @* Part 14 *@
         </dd>
 
         <dt>
@@ -80,7 +80,7 @@
         @Html.ActionLink("Delete", "DeleteJobByAdmin", "Admins", new { id = Model.Id }, new { @class = "btn btn-danger" }) <text>|</text>
     }
 
-    else if (User.Identity.IsAuthenticated && User.IsInRole("Publisher") && ViewBag.PostedThatJob)
+    else if (User.Identity.IsAuthenticated && User.IsInRole("Publisher") && ViewBag.PostedThatJob != null && ViewBag.PostedThatJob == true)
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-success" }) <text>|</text>
 

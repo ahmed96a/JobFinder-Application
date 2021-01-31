@@ -74,7 +74,7 @@
                 @Html.DisplayFor(modelItem => item.CreatedDate)
             </td>
             <td>
-                <img src="@Url.Content("~/Uploads/JobImages/" + item.JobImage)" alt="@item.JobTitle" style="width: 50px; height: 50px" class="thumbnail" />
+                <img src="@Url.Content("http://ahmed3196-001-site1.ctempurl.com/Uploads/JobImages/" + item.JobImage)" alt="@item.JobTitle" style="width: 50px; height: 50px" class="thumbnail" />
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", "Jobs", new { id = item.Id }, new { @class = "btn btn-primary" }) <text>|</text>

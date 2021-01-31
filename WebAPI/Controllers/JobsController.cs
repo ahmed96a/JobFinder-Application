@@ -30,15 +30,21 @@ namespace WebAPI.Controllers
         //--------------------------------------------------------
 
         private JobFinderDbContext db = new JobFinderDbContext();
-        private string JobImagesPath;
+        //private string JobImagesPath;
 
         public JobsController()
         {
-            var WebAPIPath = HttpContext.Current.Server.MapPath("~");
-            var SolutionPathIndex = WebAPIPath.LastIndexOf("WebAPI");
-            var SolutionPath = WebAPIPath.Substring(0, SolutionPathIndex);
+            #region For Localhost
+            // we can replace these lines by providing directly the url path of the JobImages folder, like "http://localhost:51732/Uploads/JobImages/"
+            // also we used to save the images in the front project and we do that from the api project, and that is wrong because the uploads and the resuorces should be in the api server, so if we use different clients rather than the web, like mobile for example, these resources should be available to the client mobile.
+            // also from technically point, we can save resource in the front project from the api server project if they have the same root (share the same server) that is achieved in localhost, but that not achieved when we published the two projects, because we published them on different servers, so when we try to save file from api project in the front project, we get exception (The SaveAs method is configured to require a rooted path, and the path 'fp' is not rooted).
 
-            JobImagesPath = Path.Combine(SolutionPath, @"JobFinderWebSite\Uploads\JobImages\");
+            //var WebAPIPath = HttpContext.Current.Server.MapPath("~");
+            //var SolutionPathIndex = WebAPIPath.LastIndexOf("WebAPI");
+            //var SolutionPath = WebAPIPath.Substring(0, SolutionPathIndex);
+
+            //JobImagesPath = Path.Combine(SolutionPath, @"JobFinderWebSite\Uploads\JobImages\");
+            #endregion
         }
 
         // GET: api/Jobs
@@ -228,8 +234,8 @@ namespace WebAPI.Controllers
                 if (HttpRequest.Files.Count > 0 && !string.IsNullOrEmpty(HttpRequest.Files[0].FileName))
                 {
                     HttpPostedFile JobImageFile = HttpRequest.Files[0];
-                    //var path = HttpRequest.MapPath("~/JobFinderWebSite/Uploads/JobImages/");
-                    var path = JobImagesPath;
+                    var path = HttpRequest.MapPath("~/Uploads/JobImages/");
+                    //var path = JobImagesPath;
 
                     var NewName = User.Identity.Name + "-" + Guid.NewGuid() + "-" + JobImageFile.FileName;
                     JobImageFile.SaveAs(Path.Combine(path, NewName));
@@ -237,7 +243,9 @@ namespace WebAPI.Controllers
 
                     // Delete old image
                     //string fullPath = HttpRequest.MapPath("~/JobFinderWebSite/Uploads/JobImages/" + DbJob.JobImage);
-                    string fullPath = Path.Combine(JobImagesPath, DbJob.JobImage);
+                    //string fullPath = Path.Combine(JobImagesPath, DbJob.JobImage);
+                    string fullPath = Path.Combine(path, DbJob.JobImage);
+
                     if (System.IO.File.Exists(fullPath))
                     {
                         System.IO.File.Delete(fullPath);
@@ -303,8 +311,8 @@ namespace WebAPI.Controllers
                 if (HttpRequest.Files.Count > 0 && !string.IsNullOrEmpty(HttpRequest.Files[0].FileName))
                 {
                     HttpPostedFile JobImageFile = HttpRequest.Files[0];
-                    //var path = HttpRequest.MapPath("/JobFinderWebSite/Uploads/JobImages/");
-                    var path = JobImagesPath;
+                    var path = HttpRequest.MapPath("~/Uploads/JobImages/");
+                    //var path = JobImagesPath;
 
                     var NewName = User.Identity.Name + "-" + Guid.NewGuid() + "-" + JobImageFile.FileName;
                     JobImageFile.SaveAs(Path.Combine(path, NewName));
@@ -373,7 +381,10 @@ namespace WebAPI.Controllers
                 db.SaveChanges();
 
                 //string fullPath = HttpContext.Current.Request.MapPath("/JobFinderWebSite/Uploads/JobImages/" + JobImage);
-                string fullPath = Path.Combine(JobImagesPath, JobImage);
+                //string fullPath = Path.Combine(JobImagesPath, JobImage);
+                var HttpRequest = HttpContext.Current.Request;
+                var path = HttpRequest.MapPath("~/Uploads/JobImages/");
+                string fullPath = Path.Combine(path, JobImage);
                 if (System.IO.File.Exists(fullPath))
                 {
                     System.IO.File.Delete(fullPath);

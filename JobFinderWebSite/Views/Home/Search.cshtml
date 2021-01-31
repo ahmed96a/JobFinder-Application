@@ -46,7 +46,7 @@ else
                                 <i class="fas fa-hands-helping" title="Applied To That Job"></i>
                             }
 
-                            <img src="~/Uploads/JobImages/@item.JobImage" alt="@item.JobTitle" style="height: 200px; width: 200px" />
+                            <img src="http://ahmed3196-001-site1.ctempurl.com/Uploads/JobImages/@item.JobImage" alt="@item.JobTitle" style="height: 200px; width: 200px" />
                             <h4 style="text-align: center">"@Html.DisplayFor(model => item.JobTitle)"</h4>
                             <div class="job-content">@Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => item.JobContent).ToString()))</div>
                             <a href="~/Jobs/Details/@item.Id" class="btn btn-success">Details</a>

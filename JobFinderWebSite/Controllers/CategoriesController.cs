@@ -16,7 +16,8 @@ namespace JobFinderWebSite.Controllers
 
         public CategoriesController()
         {
-            httpClient.BaseAddress = new Uri("http://localhost:53784/api/");
+            //httpClient.BaseAddress = new Uri("http://localhost:53784/api/");
+            httpClient.BaseAddress = new Uri("http://ahmed3196-001-site1.ctempurl.com/api/");
         }
 
 

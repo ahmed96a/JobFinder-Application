@@ -98,7 +98,7 @@
                         @Html.Raw(HttpUtility.HtmlDecode(@Html.DisplayFor(model => item.JobContent).ToString())) @* Part 40 *@
                     </td>
                     <td>
-                        <img src="@Url.Content("~/Uploads/JobImages/" + item.JobImage)" alt="@item.JobTitle" style="width: 100px; height: 100px" class="thumbnail" /> @* Part 14 *@
+                        <img src="@Url.Content("http://ahmed3196-001-site1.ctempurl.com/Uploads/JobImages/" + item.JobImage)" alt="@item.JobTitle" style="width: 100px; height: 100px" class="thumbnail" /> @* Part 14 *@
                     </td>
                     <td>
                         <a target="_blank" href="~/Admins/GetApplies?JobId=@item.Id">@Html.DisplayFor(modelItem => item.Applies.Count)</a>

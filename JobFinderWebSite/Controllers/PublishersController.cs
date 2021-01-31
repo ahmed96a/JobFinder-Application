@@ -14,7 +14,8 @@ namespace JobFinderWebSite.Controllers
     public class PublishersController : Controller
     {
         HttpClient httpClient = new HttpClient();
-        Uri baseAddress = new Uri("http://localhost:53784/api/");
+        //Uri baseAddress = new Uri("http://localhost:53784/api/");
+        Uri baseAddress = new Uri("http://ahmed3196-001-site1.ctempurl.com/api/");
 
         public PublishersController()
         {
@@ -194,19 +195,34 @@ namespace JobFinderWebSite.Controllers
 
         public ActionResult DownloadCV(string CVName, string ApplicantName, string JobName)
         {
+            // We can’t download file from different server by using File() method and providing to it the absolute path of the file, because File() download file from the same server by providing virtual path to it.
+            // The Resources of the that used to write the new code of download function.
+
+            // Reference.
+            // https://stackoverflow.com/questions/3604562/download-file-of-any-type-in-asp-net-mvc-using-fileresult
+            // https://stackoverflow.com/questions/51615630/c-sharp-download-file-from-webservice
+
             string Extension = CVName.Substring(CVName.LastIndexOf(".") + 1).ToLower();
+
+            var response = httpClient.GetAsync(@"http://ahmed3196-001-site1.ctempurl.com/Uploads/CV/" + CVName).Result;
+            var result = response.Content.ReadAsByteArrayAsync().Result;
+
+            /*
             switch (Extension)
             {
                 case "doc":
-                    return File("~/Uploads/CV/" + CVName, "application/msword", JobName + "-" + ApplicantName + "-CV." + Extension);
+                    return File(result, "application/msword", JobName + "-" + ApplicantName + "-CV." + Extension);
 
                 case "docx":
-                    return File("~/Uploads/CV/" + CVName, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", JobName + "-" + ApplicantName + "-CV." + Extension);
+                    return File(result, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", JobName + "-" + ApplicantName + "-CV." + Extension);
 
                 case "pdf":
                 default:
-                    return File("~/Uploads/CV/" + CVName, "application/pdf", JobName + "-" + ApplicantName + "-CV." + Extension);
+                    return File(result, "application/pdf", JobName + "-" + ApplicantName + "-CV." + Extension);
             }
+            */
+
+            return File(result, System.Net.Mime.MediaTypeNames.Application.Octet, JobName + "-" + ApplicantName + "-CV." + Extension);
         }
 
 
